@@ -704,7 +704,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Ar
 #search:focus{border-color:var(--gold)}
 .ghost{border:1px solid var(--line);background:#fff;border-radius:9px;padding:6px 10px;font-size:12px;cursor:pointer;color:var(--grey)}
 .ghost:hover{border-color:var(--gold);color:var(--ink)}
-#map{height:500px;border-radius:12px;z-index:1}
+#map{height:400px;border-radius:12px;z-index:1}
 .pesoIcon{background:var(--ink)!important;border:1.5px solid var(--yel)!important;border-radius:50%;color:var(--yel);font-weight:800;font-size:10px;display:flex!important;align-items:center;justify-content:center;width:17px!important;height:17px!important;box-shadow:0 1px 2px rgba(0,0,0,.5)}
 .maphint{margin-top:9px;font-size:11px;color:var(--mut)}
 .selrow{margin-top:10px;font-size:13px;color:var(--grey)}.selrow b{color:var(--ink);font-weight:800}
@@ -737,7 +737,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Ar
 .pctwrap{position:relative}.pctwrap input{width:100%;background:#EFEEE9;color:var(--grey);text-align:center;padding-left:24px;padding-right:24px;cursor:not-allowed}
 .pctsfx{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--grey);font-weight:800;pointer-events:none}
 .notered{color:var(--mut);font-style:italic}
-.foot{margin-top:22px;font-size:11px;color:var(--mut);text-align:center}
+.planocard .selrow{margin-top:0;color:#d8d8d2}.planocard .selrow b{color:#fff}
+.planocard .chips{margin-bottom:4px}
+.planocard .chip{background:#2b2b27;border-color:#444;color:#eee}
+.planocard .chip:hover{border-color:var(--gold)}.planocard .chip b{color:#888}
+.planocard .bairros{border-top:1px solid #333}
+.planocard .bcount{color:#d8d8d2}.planocard .bcount b{color:#fff}
+.planocard .blist{color:#9a9a93}
+.planocard .pillars{margin-top:16px}
+.kmzfoot{margin-top:24px}
+.foot{margin-top:18px;font-size:11px;color:var(--mut);text-align:center}
 @media(max-width:900px){.layout{grid-template-columns:1fr}.pillars{grid-template-columns:1fr}#map{height:400px}}
 </style>
 </head>
@@ -751,10 +760,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Ar
           <div class="tools"><input id="search" list="dl" placeholder="Buscar&hellip;" autocomplete="off"><datalist id="dl"></datalist><button id="clear" class="ghost">Limpar</button></div></div>
         <div id="map"></div>
         <div class="maphint">Use o scroll/pinça para dar zoom. Ao selecionar, o número (1&ndash;3) indica o grau de complexidade da prospecção e da formatação imobiliária de cada região.</div>
-        <div class="selrow"><b id="selcount">0</b> distrito(s)-alvo selecionado(s)</div>
-        <div class="chips" id="chips"></div>
-        <div class="bairros"><div class="bcount"><b id="bcount">0</b> bairros englobados</div><div class="blist" id="blist"></div></div>
-        <div class="kmznote"><svg class="supico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-2a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h3zM3 19a2 2 0 0 0 2 2h2a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1H3z"/></svg><b>Prefere desenhar sua própria região-alvo?</b> Entre em contato com quem está te atendendo na Terreno Livre e envie um <b>.KMZ</b> com o perímetro/poligonal &mdash; atuamos sobre uma área totalmente personalizada e o território será considerado no dimensionamento.</div>
       </section>
 
       <section class="card">
@@ -775,6 +780,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Ar
     <section class="planocard">
       <div class="planohead">Plano Indicado</div>
       <div class="psummary" id="summary">&mdash;</div>
+      <div class="selrow"><b id="selcount">0</b> distrito(s)-alvo selecionado(s)</div>
+      <div class="chips" id="chips"></div>
+      <div class="bairros"><div class="bcount"><b id="bcount">0</b> bairros englobados</div><div class="blist" id="blist"></div></div>
       <div class="pillars">
         <div class="pillar"><div class="ph">IMPLANTAÇÃO</div><div class="pb">
           <div class="tag">uma vez &middot; no início</div>
@@ -798,6 +806,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Ar
       </div>
     </section>
   </div>
+  <div class="kmznote kmzfoot"><svg class="supico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-2a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h3zM3 19a2 2 0 0 0 2 2h2a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1H3z"/></svg><b>Prefere desenhar sua própria região-alvo?</b> Entre em contato com quem está te atendendo na Terreno Livre e envie um <b>.KMZ</b> com o perímetro/poligonal &mdash; atuamos sobre uma área totalmente personalizada e o território será considerado no dimensionamento.</div>
   <p class="foot">Terreno Livre &middot; Dimensionamento (Simulador TL) &mdash; valores indicativos, sujeitos a confirmação em Proposta.</p>
 </main>
 <script>/* @preserve
