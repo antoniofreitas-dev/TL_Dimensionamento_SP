@@ -676,10 +676,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Ar
 .topbar{background:var(--ink);display:flex;align-items:center;padding:14px 26px}
 .topbar img{height:42px;width:auto;display:block}
 .wrap{max-width:1260px;margin:0 auto;padding:22px 20px 50px}
-.layout{display:grid;grid-template-columns:minmax(330px,440px) 1fr;gap:18px;align-items:start}
+.layout{display:grid;grid-template-columns:minmax(330px,440px) 1fr;gap:18px;align-items:stretch}
 .leftcol{display:flex;flex-direction:column;gap:18px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
-.stephead{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:800;margin-bottom:12px}
+.stephead{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;margin-bottom:12px}
+.stepico{color:var(--gold);flex:0 0 auto}
 .snum{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--yel);font-size:12px;font-weight:800;flex:0 0 auto}
 /* box1 compacto */
 .segrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:13px}
@@ -718,7 +719,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Ar
 .kmznote b{color:var(--ink)}
 .supico{vertical-align:-2px;margin-right:6px;color:var(--gold);opacity:.85}
 /* plano direita */
-.planocard{background:var(--ink);color:#fff;border:1px solid #333;border-radius:16px;padding:18px 20px}
+.planocard{background:var(--ink);color:#fff;border:1px solid #333;border-radius:16px;padding:18px 20px;display:flex;flex-direction:column}
 .planohead{font-size:15px;letter-spacing:.06em;color:#fff;font-weight:800}
 .psummary{font-size:13px;color:#d8d8d2;margin:6px 0 16px}.psummary .hl{color:var(--yel);font-weight:800}
 .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -744,7 +745,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Ar
 .planocard .bairros{border-top:1px solid #333}
 .planocard .bcount{color:#d8d8d2}.planocard .bcount b{color:#fff}
 .planocard .blist{color:#9a9a93}
-.planocard .pillars{margin-top:16px}
+.planocard .selrow,.planocard .chips,.planocard .bairros{margin-left:14px}
+.planocard .pillars{margin-top:16px;flex:1}
 .kmzfoot{margin-top:24px}
 .foot{margin-top:18px;font-size:11px;color:var(--mut);text-align:center}
 @media(max-width:900px){.layout{grid-template-columns:1fr}.pillars{grid-template-columns:1fr}#map{height:400px}}
@@ -756,14 +758,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Ar
   <div class="layout">
     <div class="leftcol">
       <section class="card">
-        <div class="stephead"><span class="snum">1</span> Selecione no mapa suas regiões-alvo na cidade de São Paulo:
+        <div class="stephead"><span class="snum">1</span><svg class="stepico" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 8 3 16 6 23 3 23 18 16 21 8 18 1 21"/><line x1="8" y1="3" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="21"/></svg> Selecione suas regiões-alvo em SP-São Paulo:
           <div class="tools"><input id="search" list="dl" placeholder="Buscar&hellip;" autocomplete="off"><datalist id="dl"></datalist><button id="clear" class="ghost">Limpar</button></div></div>
         <div id="map"></div>
         <div class="maphint">Use o scroll/pinça para dar zoom. Ao selecionar, o número (1&ndash;3) indica o grau de complexidade da prospecção e da formatação imobiliária de cada região.</div>
       </section>
 
       <section class="card">
-        <div class="stephead"><span class="snum">2</span> Alinhe sua expectativa e sua meta</div>
+        <div class="stephead"><span class="snum">2</span><svg class="stepico" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 17a9 9 0 1 1 17 0"/><line x1="12" y1="17" x2="16" y2="11"/></svg> Recalibre sua Cadência de encomendas, se necessário:</div>
         <div class="mslider">
           <div class="enclabel"><span>Encomendas por mês <span style="color:var(--mut);font-weight:400">(áreas a originar)</span></span><span class="v"><span id="encv">4</span></span></div>
           <input type="range" id="enc" min="4" max="42" step="1" value="4">
@@ -778,7 +780,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Ar
     </div>
 
     <section class="planocard">
-      <div class="planohead">Plano Indicado</div>
+      <div class="planohead">Plano sugerido:</div>
       <div class="psummary" id="summary">&mdash;</div>
       <div class="selrow"><b id="selcount">0</b> distrito(s)-alvo selecionado(s)</div>
       <div class="chips" id="chips"></div>
@@ -845,7 +847,7 @@ DATA.districts.forEach(o=>{
   const op=document.createElement('option');op.value=o.n;document.getElementById('dl').appendChild(op);
 });
 const fg=L.featureGroup(Object.values(polys));
-function fit(){map.invalidateSize();map.fitBounds(fg.getBounds(),{padding:[2,2]});map.setZoom(map.getZoom()+0.5);}
+function fit(){map.invalidateSize();map.fitBounds(fg.getBounds(),{padding:[10,10]});}
 fit();
 setTimeout(fit,300); window.addEventListener('load',fit); window.addEventListener('resize',()=>map.invalidateSize());
 function setMarker(o,on){
